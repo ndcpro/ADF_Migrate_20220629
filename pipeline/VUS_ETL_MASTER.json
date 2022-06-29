@@ -66,26 +66,6 @@
 					},
 					"waitOnCompletion": true
 				}
-			},
-			{
-				"name": "VUS_PLP",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "SIL GENERAL",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "VUS_PLP",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
 			}
 		],
 		"parameters": {
@@ -98,7 +78,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-06-06T15:40:34Z"
+		"lastPublishTime": "2022-02-08T11:15:21Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

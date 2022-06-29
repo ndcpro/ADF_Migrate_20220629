@@ -94,6 +94,13 @@
 											"type": "Expression"
 										},
 										"type": "Int64"
+									},
+									"p_target_table": {
+										"value": {
+											"value": "@variables('Target_Table')",
+											"type": "Expression"
+										},
+										"type": "String"
 									}
 								}
 							},
@@ -131,6 +138,9 @@
 			"BATCH_ID": {
 				"type": "string",
 				"defaultValue": "19000101"
+			},
+			"TGT_TABLE": {
+				"type": "string"
 			}
 		},
 		"variables": {
@@ -145,7 +155,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-06-06T15:40:33Z"
+		"lastPublishTime": "2022-02-08T11:15:16Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

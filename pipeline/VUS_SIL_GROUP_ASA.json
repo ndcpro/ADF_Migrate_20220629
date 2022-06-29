@@ -1,5 +1,5 @@
 {
-	"name": "VUS_SIL_GROUP_CRM",
+	"name": "VUS_SIL_GROUP_ASA",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "SELECT [JOB_SCRIPT] AS [SRC_LIST], [SOURCE_TABLE] AS [SRC_TBL], [TARGET_TABLE] AS [TGT_TBL] \nFROM [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SIL' and JOB_SUB_GROUP ='SIL - CRM'",
+						"sqlReaderQuery": "SELECT [JOB_SCRIPT] AS [SRC_LIST], [SOURCE_TABLE] AS [SRC_TBL], [TARGET_TABLE] AS [TGT_TBL] \nFROM [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SIL' and JOB_SUB_GROUP ='SIL - ASA'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -155,7 +155,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-05-01T17:27:16Z"
+		"lastPublishTime": "2022-02-08T11:15:16Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

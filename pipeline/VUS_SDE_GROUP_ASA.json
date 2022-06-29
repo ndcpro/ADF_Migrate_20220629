@@ -1,5 +1,5 @@
 {
-	"name": "VUS_SDE_GROUP_QLGV",
+	"name": "VUS_SDE_GROUP_ASA",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(2),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP ='SDE - QLGV'",
+						"sqlReaderQuery": "\t\t   select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(2),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP ='SDE - ASA'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -242,7 +242,6 @@
 										"value": "TRUNCATE TABLE [STG].[@{Item().TGT_TBL}]",
 										"type": "Expression"
 									},
-									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": true,
@@ -251,7 +250,7 @@
 										"referenceName": "LS_STORAGE_ACCOUNT_DEV",
 										"type": "LinkedServiceReference"
 									},
-									"path": "adfstagedpolybasetempdata"
+									"path": ""
 								}
 							},
 							"inputs": [
@@ -461,7 +460,7 @@
 				}
 			}
 		],
-		"concurrency": 6,
+		"concurrency": 3,
 		"parameters": {
 			"BATCH_ID": {
 				"type": "string",

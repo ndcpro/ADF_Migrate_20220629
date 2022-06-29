@@ -1,5 +1,5 @@
 {
-	"name": "VUS_SDE_GROUP_QLGV",
+	"name": "VUS_SDE_GROUP_TQM",
 	"properties": {
 		"activities": [
 			{
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(2),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP ='SDE - QLGV'",
+						"sqlReaderQuery": "select case when FULL_LOAD_FLG ='N' then JOB_SCRIPT +' and '+INCREMENTAL_COL +'>= dateadd(day,-'+convert(varchar(2),PRUNE_DAYS)+',getdate())' else JOB_SCRIPT end as SRC_LIST, [SOURCE_SCHEMA] as SRC_SCHEMA,[SOURCE_TABLE] as SRC_TBL,  [TARGET_TABLE] as TGT_TBL \nfrom [ADF].[ETL_JOB] WHERE ACTIVE_FLG ='Y' and JOB_GROUP ='SDE' and JOB_SUB_GROUP  ='SDE - TQM'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

@@ -133,6 +133,7 @@
 				}
 			}
 		],
+		"concurrency": 6,
 		"parameters": {
 			"BATCH_ID": {
 				"type": "string",
@@ -154,7 +155,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-05-29T07:58:30Z"
+		"lastPublishTime": "2022-02-08T11:15:16Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

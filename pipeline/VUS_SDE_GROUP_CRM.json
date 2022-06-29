@@ -246,7 +246,7 @@
 									"polyBaseSettings": {
 										"rejectValue": 0,
 										"rejectType": "value",
-										"useTypeDefault": false
+										"useTypeDefault": true
 									},
 									"disableMetricsCollection": false
 								},
@@ -256,7 +256,7 @@
 										"referenceName": "LS_STORAGE_ACCOUNT_DEV",
 										"type": "LinkedServiceReference"
 									},
-									"path": "logadf"
+									"path": "adfstagedpolybasetempdata"
 								}
 							},
 							"inputs": [
@@ -466,6 +466,7 @@
 				}
 			}
 		],
+		"concurrency": 6,
 		"parameters": {
 			"BATCH_ID": {
 				"type": "string",
@@ -493,7 +494,7 @@
 			"name": "VUS_ETL"
 		},
 		"annotations": [],
-		"lastPublishTime": "2022-05-29T07:56:05Z"
+		"lastPublishTime": "2022-05-01T17:26:24Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
