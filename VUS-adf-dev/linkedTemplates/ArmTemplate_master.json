@@ -1,0 +1,117 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "VUS-adf-dev"
+		},
+		"TQMCONNECTION_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TQMCONNECTION'"
+		},
+		"LS_DWH_SYNAPSE_DEV_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_DWH_SYNAPSE_DEV'"
+		},
+		"LS_STORAGE_ACCOUNT_DEV_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_STORAGE_ACCOUNT_DEV'"
+		},
+		"Synapse Prod_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Synapse Prod'"
+		},
+		"IR-Share_properties_typeProperties_linkedInfo_resourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d607421b-81ca-426a-8942-2fd12f5c9611/resourcegroups/DWCLOUD-Prod/providers/Microsoft.DataFactory/factories/vus-adf-prod/integrationruntimes/IR-PROD"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "VUS-adf-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_DWH_SYNAPSE_DEV_connectionString": {
+						"value": "[parameters('LS_DWH_SYNAPSE_DEV_connectionString')]"
+					},
+					"LS_STORAGE_ACCOUNT_DEV_connectionString": {
+						"value": "[parameters('LS_STORAGE_ACCOUNT_DEV_connectionString')]"
+					},
+					"Synapse Prod_connectionString": {
+						"value": "[parameters('Synapse Prod_connectionString')]"
+					},
+					"TQMCONNECTION_connectionString": {
+						"value": "[parameters('TQMCONNECTION_connectionString')]"
+					},
+					"IR-Share_properties_typeProperties_linkedInfo_resourceId": {
+						"value": "[parameters('IR-Share_properties_typeProperties_linkedInfo_resourceId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "VUS-adf-dev_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VUS-adf-dev_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "VUS-adf-dev_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'VUS-adf-dev_ArmTemplate_1')]"
+			]
+		}
+	]
+}

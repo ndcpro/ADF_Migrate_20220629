@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "VUS-adf-dev"
+		},
+		"TQMCONNECTION_connectionString": {
+			"value": ""
+		},
+		"LS_DWH_SYNAPSE_DEV_connectionString": {
+			"value": ""
+		},
+		"LS_STORAGE_ACCOUNT_DEV_connectionString": {
+			"value": ""
+		},
+		"Synapse Prod_connectionString": {
+			"value": ""
+		},
+		"IR-Share_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/d607421b-81ca-426a-8942-2fd12f5c9611/resourcegroups/DWCLOUD-Prod/providers/Microsoft.DataFactory/factories/vus-adf-prod/integrationruntimes/IR-PROD"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
