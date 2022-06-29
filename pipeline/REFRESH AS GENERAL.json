@@ -1,0 +1,568 @@
+{
+	"name": "REFRESH AS GENERAL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get List Refresh_G0",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Start AS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G0"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G0",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G0",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G0",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G0').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G0",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G0",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G0')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Start AS",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "RESUME AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Get List Refresh_G1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Refresh AS_G0",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G1"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G1",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G1').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G1')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get List Refresh_G2",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Refresh AS_G1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G2"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G2",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G2').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G2')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get List Refresh_G3",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Refresh AS_G2",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G3"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G3",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G3",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G3').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G3",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G3",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G3')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get List Refresh_G4",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Refresh AS_G3",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G4"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G4",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G4",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G4').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G4",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G4')",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get List Refresh_G5",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Refresh AS_G4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderStoredProcedureName": "[ADF].[proc_ETL_REFRESH_SSAS]",
+						"storedProcedureParameters": {
+							"group_name": {
+								"type": "String",
+								"value": "G5"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_DWH_SYNAPSE_ADF",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "ETL_REFRESH_SSAS"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set List_Table_G5",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get List Refresh_G5",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "List_Table_G5",
+					"value": {
+						"value": "@concat(activity('Get List Refresh_G5').output.firstRow.AAA)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Refresh AS_G5",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set List_Table_G5",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "REFRESH AS",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"RefreshRequestBody": {
+							"value": "@variables('List_Table_G5')",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"List_Table_G0": {
+				"type": "String"
+			},
+			"List_Table_G1": {
+				"type": "String"
+			},
+			"List_Table_G2": {
+				"type": "String"
+			},
+			"List_Table_G3": {
+				"type": "String"
+			},
+			"List_Table_G4": {
+				"type": "String"
+			},
+			"List_Table_G5": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "AZURE AS"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-24T03:03:46Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

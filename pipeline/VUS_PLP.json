@@ -1,0 +1,108 @@
+{
+	"name": "VUS_PLP",
+	"properties": {
+		"activities": [
+			{
+				"name": "VUS_PLP_GROUP_01",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "VUS_PLP_GROUP_00",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_PLP_GROUP_01",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_PLP_GROUP_02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "REBUILD INDEX",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_PLP_GROUP_02",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "VUS_PLP_GROUP_00",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "VUS_PLP_GROUP_00",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "REBUILD INDEX",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "VUS_PLP_GROUP_01",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[DWH].[proc_Rebuild_Index]",
+					"storedProcedureParameters": {
+						"p_batch_id": {
+							"value": {
+								"value": "@pipeline().parameters.BATCH_ID",
+								"type": "Expression"
+							},
+							"type": "Int64"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_DWH_SYNAPSE_DEV",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"BATCH_ID": {
+				"type": "string",
+				"defaultValue": "19000101"
+			}
+		},
+		"folder": {
+			"name": "VUS_ETL"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-05-29T14:12:34Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
